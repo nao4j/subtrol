@@ -1,0 +1,12 @@
+### Java ###
+*.class
+*.jar
+
+### Apache Maven ###
+target/
+
+### JetBrains IntelliJ IDEA ###
+.idea/
+*.iml
+*.ipr
+*.iws
