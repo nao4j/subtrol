@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "api.fixer.key",
+      "type": "java.lang.String",
+      "description": "API_KEY for Fixer."
+    }
+  ]
+}

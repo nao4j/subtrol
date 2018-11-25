@@ -1,0 +1,7 @@
+spring:
+  data:
+    mongodb:
+      uri: ${MONGO_URI}
+api:
+  fixer:
+    key: ${FIXER_KEY}
