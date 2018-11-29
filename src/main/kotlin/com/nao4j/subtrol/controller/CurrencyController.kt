@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDate
 
 @RestController
-@RequestMapping("/currencies")
+@RequestMapping("/api/currencies")
 class CurrencyController(val currencyService: CurrencyService) {
 
     @GetMapping

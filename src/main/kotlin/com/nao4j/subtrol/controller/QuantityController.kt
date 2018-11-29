@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/quantities")
+@RequestMapping("/api/quantities")
 class QuantityController(val quantityService: QuantityService) {
 
     @GetMapping
