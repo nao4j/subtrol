@@ -29,10 +29,7 @@ class SubscriptionController(val subscriptionService: SubscriptionService) {
     }
 
     @DeleteMapping
-    fun remove(
-            @RequestParam serviceName: String,
-            @RequestBody subscription: Subscription
-    ): Subscription {
+    fun remove(@RequestParam serviceName: String, @RequestBody subscription: Subscription): Subscription {
         val user = SecurityContextHolder.getContext().authentication.details as UserCredentials
         return subscriptionService.remove(user.id, serviceName, subscription)
     }
