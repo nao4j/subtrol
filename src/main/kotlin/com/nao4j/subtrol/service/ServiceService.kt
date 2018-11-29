@@ -8,4 +8,6 @@ interface ServiceService {
 
     fun create(userId: String, service: ShortService): ShortService
 
+    fun remove(userId: String, service: ShortService): ShortService
+
 }

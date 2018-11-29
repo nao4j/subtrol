@@ -29,4 +29,12 @@ class ServiceServiceImpl(val userRepository: UserRepository): ServiceService {
         return service
     }
 
+    override fun remove(userId: String, service: ShortService): ShortService {
+        val user = userRepository.findById(userId).orElseThrow { IllegalArgumentException() }
+        val fullService: Service = user.services.find {it.name == service.name} ?: throw IllegalArgumentException()
+        val updatedUser = user.copy(services = user.services.minus(fullService))
+        userRepository.save(updatedUser)
+        return service
+    }
+
 }
