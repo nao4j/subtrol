@@ -1,7 +1,6 @@
-package com.nao4j.subtrol.service
+package com.nao4j.subtrol.security
 
 import com.nao4j.subtrol.repository.UserRepository
-import com.nao4j.subtrol.security.UserDetailsImpl
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
