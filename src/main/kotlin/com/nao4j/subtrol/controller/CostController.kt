@@ -19,8 +19,8 @@ class CostController(private val costService: CostService) {
 
     @GetMapping
     fun getAllInPeriod(
-            @RequestParam @DateTimeFormat(iso = DATE_TIME) start: LocalDateTime,
-            @RequestParam @DateTimeFormat(iso = DATE_TIME) end: LocalDateTime
+        @RequestParam @DateTimeFormat(iso = DATE_TIME) start: LocalDateTime,
+        @RequestParam @DateTimeFormat(iso = DATE_TIME) end: LocalDateTime
     ): Costs {
         val user = SecurityContextHolder.getContext().authentication.details as UserCredentials
         return costService.calculateForPeriod(user.id, ExactPeriod(start, end))

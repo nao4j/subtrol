@@ -26,19 +26,19 @@ class MonthlySubscriptionSlicerTest : WithAssertions {
     @CsvFileSource(resources = ["/monthly-slicer.csv"], delimiter = ';', numLinesToSkip = 1)
     fun shouldPass(@AggregateWith(TestDataAggregator::class) testData: TestData) {
         assertThat(slicer.slice(testData.subscriptionPeriod, testData.calculatePeriod, testData.stepSize))
-                .isEqualTo(testData.expected)
+            .isEqualTo(testData.expected)
     }
 
 }
 
 data class TestData(
-        val subscriptionPeriod: RightOpenPeriod,
-        val stepSize: Long,
-        val calculatePeriod: ExactPeriod,
-        val expected: Collection<ExactPeriod>
+    val subscriptionPeriod: RightOpenPeriod,
+    val stepSize: Long,
+    val calculatePeriod: ExactPeriod,
+    val expected: Collection<ExactPeriod>
 )
 
-class TestDataAggregator: ArgumentsAggregator {
+class TestDataAggregator : ArgumentsAggregator {
 
     override fun aggregateArguments(arguments: ArgumentsAccessor?, context: ParameterContext?): Any {
         val subscriptionStart = LocalDateTime.parse(arguments!!.getString(0))
@@ -54,16 +54,18 @@ class TestDataAggregator: ArgumentsAggregator {
         val expected = mutableListOf<ExactPeriod>()
         for (i in 0 until array.length()) {
             val item = array.getJSONObject(i)
-            expected.add(ExactPeriod(
+            expected.add(
+                ExactPeriod(
                     LocalDateTime.parse(item.getString("start")),
                     LocalDateTime.parse(item.getString("end"))
-            ))
+                )
+            )
         }
         return TestData(
-                RightOpenPeriod(subscriptionStart, subscriptionEnd),
-                stepSize,
-                ExactPeriod(calculateStart, calculateEnd),
-                expected
+            RightOpenPeriod(subscriptionStart, subscriptionEnd),
+            stepSize,
+            ExactPeriod(calculateStart, calculateEnd),
+            expected
         )
     }
 

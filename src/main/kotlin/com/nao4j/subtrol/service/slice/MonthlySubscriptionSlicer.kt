@@ -5,12 +5,12 @@ import com.nao4j.subtrol.model.RightOpenPeriod
 import java.time.LocalDateTime
 import java.time.YearMonth
 
-class MonthlySubscriptionSlicer: SubscriptionSlicer {
+class MonthlySubscriptionSlicer : SubscriptionSlicer {
 
     override fun slice(
-            subscriptionPeriod: RightOpenPeriod,
-            calculationPeriod: ExactPeriod,
-            stepSize: Long
+        subscriptionPeriod: RightOpenPeriod,
+        calculationPeriod: ExactPeriod,
+        stepSize: Long
     ): Collection<ExactPeriod> {
         if (isNotIntersect(subscriptionPeriod, calculationPeriod)) {
             return emptyList()
@@ -26,17 +26,17 @@ class MonthlySubscriptionSlicer: SubscriptionSlicer {
         return slices
     }
 
-    private fun isNotIntersect(subscriptionPeriod: RightOpenPeriod, calculatePeriod: ExactPeriod)
-            = subscriptionPeriod.end != null && calculatePeriod.start.isAfter(subscriptionPeriod.end)
-            || calculatePeriod.end.isBefore(subscriptionPeriod.start)
+    private fun isNotIntersect(subscriptionPeriod: RightOpenPeriod, calculatePeriod: ExactPeriod) =
+        subscriptionPeriod.end != null && calculatePeriod.start.isAfter(subscriptionPeriod.end)
+                || calculatePeriod.end.isBefore(subscriptionPeriod.start)
 
-    private fun isBeforeOrEquals(value: LocalDateTime, reference: LocalDateTime?)
-            = reference == null || value.isBefore(reference) || value == reference
+    private fun isBeforeOrEquals(value: LocalDateTime, reference: LocalDateTime?) =
+        reference == null || value.isBefore(reference) || value == reference
 
     private fun findRealCalculationStart(
-            subscriptionPeriod: RightOpenPeriod,
-            stepSize: Long,
-            calculatePeriod: ExactPeriod
+        subscriptionPeriod: RightOpenPeriod,
+        stepSize: Long,
+        calculatePeriod: ExactPeriod
     ): LocalDateTime {
         val subscriptionStartDay = subscriptionPeriod.start.dayOfMonth
 

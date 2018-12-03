@@ -12,12 +12,12 @@ class UserDetailsServiceImpl(private val userRepository: UserRepository) : UserD
 
     override fun loadUserByUsername(username: String?): UserDetails {
         val credentials = userRepository.findUserCredentialsByEmail(username)
-                ?: throw UsernameNotFoundException("User not found")
+            ?: throw UsernameNotFoundException("User not found")
         return UserDetailsImpl(
-                credentials.id,
-                credentials.email,
-                credentials.password,
-                credentials.roles.map { SimpleGrantedAuthority(it) }
+            credentials.id,
+            credentials.email,
+            credentials.password,
+            credentials.roles.map { SimpleGrantedAuthority(it) }
         )
     }
 

@@ -21,10 +21,10 @@ import javax.servlet.http.HttpServletResponse
 import javax.servlet.http.HttpServletResponse.SC_OK
 
 class GenerateTokenForUserFilter(
-        defaultFilterProcessesUrl: String,
-        authenticationManager: AuthenticationManager,
-        private val secret: String,
-        private val validityTimeMs: Long
+    defaultFilterProcessesUrl: String,
+    authenticationManager: AuthenticationManager,
+    private val secret: String,
+    private val validityTimeMs: Long
 ) : AbstractAuthenticationProcessingFilter(defaultFilterProcessesUrl) {
 
     init {
@@ -49,10 +49,10 @@ class GenerateTokenForUserFilter(
 
     @Throws(IOException::class, ServletException::class)
     override fun successfulAuthentication(
-            req: HttpServletRequest,
-            res: HttpServletResponse,
-            chain: FilterChain,
-            authToken: Authentication
+        req: HttpServletRequest,
+        res: HttpServletResponse,
+        chain: FilterChain,
+        authToken: Authentication
     ) {
         SecurityContextHolder.getContext().authentication = authToken
 
@@ -68,12 +68,12 @@ class GenerateTokenForUserFilter(
 
     private fun createTokenForUser(user: UserDetailsImpl): String {
         return Jwts.builder()
-                .setExpiration(Date(System.currentTimeMillis() + validityTimeMs))
-                .setSubject(user.username)
-                .claim("userId", user.id)
-                .claim("roles", user.authorities.map {it.authority}.joinToString(separator = ","))
-                .signWith(SignatureAlgorithm.HS256, secret)
-                .compact()
+            .setExpiration(Date(System.currentTimeMillis() + validityTimeMs))
+            .setSubject(user.username)
+            .claim("userId", user.id)
+            .claim("roles", user.authorities.map { it.authority }.joinToString(separator = ","))
+            .signWith(SignatureAlgorithm.HS256, secret)
+            .compact()
     }
 
 }

@@ -6,15 +6,15 @@ import com.nao4j.subtrol.repository.UserRepository
 
 @org.springframework.stereotype.Service
 class SubscriptionServiceImpl(
-        private val userRepository: UserRepository,
-        private val currencyService: CurrencyService
-): SubscriptionService {
+    private val userRepository: UserRepository,
+    private val currencyService: CurrencyService
+) : SubscriptionService {
 
     override fun getAll(userId: String, serviceName: String): List<Subscription> {
         val user = userRepository.findById(userId).orElseThrow { IllegalArgumentException() }
-        val service: Service
-                = user.services.find { service -> service.name == serviceName } ?:throw IllegalAccessException()
-        return service.subscriptions.sortedWith(compareBy {it.period.start})
+        val service: Service =
+            user.services.find { service -> service.name == serviceName } ?: throw IllegalAccessException()
+        return service.subscriptions.sortedWith(compareBy { it.period.start })
     }
 
     override fun add(userId: String, serviceName: String, subscription: Subscription): Subscription {
@@ -23,8 +23,8 @@ class SubscriptionServiceImpl(
             throw IllegalArgumentException()
         }
         val user = userRepository.findById(userId).orElseThrow { IllegalArgumentException() }
-        val service: Service
-                = user.services.find { service -> service.name == serviceName } ?:throw IllegalAccessException()
+        val service: Service =
+            user.services.find { service -> service.name == serviceName } ?: throw IllegalAccessException()
 
         val intersections: List<Subscription> = service.subscriptions.filter {
             it.period.end != null && subscription.period.start < it.period.end
@@ -52,8 +52,8 @@ class SubscriptionServiceImpl(
 
     override fun remove(userId: String, serviceName: String, subscription: Subscription): Subscription {
         val user = userRepository.findById(userId).orElseThrow { IllegalArgumentException() }
-        val service: Service
-                = user.services.find { service -> service.name == serviceName } ?:throw IllegalAccessException()
+        val service: Service =
+            user.services.find { service -> service.name == serviceName } ?: throw IllegalAccessException()
         if (!service.subscriptions.contains(subscription)) {
             throw IllegalArgumentException()
         }

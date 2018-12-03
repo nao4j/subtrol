@@ -6,7 +6,7 @@ import com.nao4j.subtrol.repository.UserRepository
 import java.time.LocalDateTime.now
 
 @org.springframework.stereotype.Service
-class ServiceServiceImpl(private val userRepository: UserRepository): ServiceService {
+class ServiceServiceImpl(private val userRepository: UserRepository) : ServiceService {
 
     override fun getAllForUser(userId: String): Set<ShortService> {
         val user = userRepository.findById(userId).orElseThrow { IllegalArgumentException() }
@@ -16,7 +16,7 @@ class ServiceServiceImpl(private val userRepository: UserRepository): ServiceSer
                 it.period.start <= now && (it.period.end == null || it.period.end > now)
             }
             ShortService(service.name, currentSubscription)
-        }.sortedWith(compareBy {it.name}).toSet()
+        }.sortedWith(compareBy { it.name }).toSet()
     }
 
     override fun create(userId: String, service: ShortService): ShortService {
@@ -31,7 +31,7 @@ class ServiceServiceImpl(private val userRepository: UserRepository): ServiceSer
 
     override fun remove(userId: String, service: ShortService): ShortService {
         val user = userRepository.findById(userId).orElseThrow { IllegalArgumentException() }
-        val fullService: Service = user.services.find {it.name == service.name} ?: throw IllegalArgumentException()
+        val fullService: Service = user.services.find { it.name == service.name } ?: throw IllegalArgumentException()
         val updatedUser = user.copy(services = user.services.minus(fullService))
         userRepository.save(updatedUser)
         return service

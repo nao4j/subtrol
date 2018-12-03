@@ -16,18 +16,18 @@ import java.math.RoundingMode.HALF_UP
 
 @org.springframework.stereotype.Service
 class CostServiceImpl(
-        private val userRepository: UserRepository,
-        private val subscriptionSliceService: SubscriptionSliceService,
-        private val currencyService: CurrencyService
-): CostService {
+    private val userRepository: UserRepository,
+    private val subscriptionSliceService: SubscriptionSliceService,
+    private val currencyService: CurrencyService
+) : CostService {
 
     override fun calculateForPeriod(userId: String, period: ExactPeriod): Costs {
         val user: User = userRepository.findById(userId).orElseThrow { IllegalArgumentException() }
         val costs = user.services.filter(serviceIn(period))
-                .flatMap(serviceTo(period))
-                .map(fixAccurate(user.settings.mainCurrency))
-                .sortedWith(compareBy({it.period.start}, {it.name}))
-                .toList()
+            .flatMap(serviceTo(period))
+            .map(fixAccurate(user.settings.mainCurrency))
+            .sortedWith(compareBy({ it.period.start }, { it.name }))
+            .toList()
         val currencyRates = mutableSetOf<CurrencyRate>()
         var isAccurate = true
         var sum = ZERO.setScale(2, HALF_UP)
@@ -44,11 +44,11 @@ class CostServiceImpl(
             }
         }
         return Costs(
-                Price(sum.setScale(2, HALF_UP), user.settings.mainCurrency),
-                isAccurate,
-                period,
-                currencyRates,
-                costs
+            Price(sum.setScale(2, HALF_UP), user.settings.mainCurrency),
+            isAccurate,
+            period,
+            currencyRates,
+            costs
         )
     }
 
@@ -65,13 +65,14 @@ class CostServiceImpl(
         service.subscriptions.filter(subscriptionIn(period)).flatMap(subscriptionTo(service.name, period)).toList()
     }
 
-    private fun subscriptionTo(serviceName: String, period: ExactPeriod): (Subscription) -> Collection<Cost> = {
-        subscription -> subscriptionSliceService.slice(subscription, period)
-            .map { slice ->
-                val isAccurate = subscription.quantity.type != UNITS
-                Cost(serviceName, subscription.price, slice, isAccurate)
-            }
-    }
+    private fun subscriptionTo(serviceName: String, period: ExactPeriod): (Subscription) -> Collection<Cost> =
+        { subscription ->
+            subscriptionSliceService.slice(subscription, period)
+                .map { slice ->
+                    val isAccurate = subscription.quantity.type != UNITS
+                    Cost(serviceName, subscription.price, slice, isAccurate)
+                }
+        }
 
     private fun fixAccurate(mainCurrency: String): (Cost) -> Cost = { cost ->
         if (cost.price.currencyCode != mainCurrency) {

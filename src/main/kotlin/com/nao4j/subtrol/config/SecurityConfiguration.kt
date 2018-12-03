@@ -25,15 +25,15 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         super.configure(http)
         http.exceptionHandling()
-                .and().anonymous()
-                .and().csrf().disable()
-                .addFilterBefore(VerifyTokenFilter(secret), UsernamePasswordAuthenticationFilter::class.java)
-                .addFilterBefore(
-                        GenerateTokenForUserFilter("/auth", authenticationManager(), secret, validityTimeMs.toLong()),
-                        UsernamePasswordAuthenticationFilter::class.java
-                )
-                .authorizeRequests().anyRequest().authenticated()
-                .and().sessionManagement().sessionCreationPolicy(STATELESS)
+            .and().anonymous()
+            .and().csrf().disable()
+            .addFilterBefore(VerifyTokenFilter(secret), UsernamePasswordAuthenticationFilter::class.java)
+            .addFilterBefore(
+                GenerateTokenForUserFilter("/auth", authenticationManager(), secret, validityTimeMs.toLong()),
+                UsernamePasswordAuthenticationFilter::class.java
+            )
+            .authorizeRequests().anyRequest().authenticated()
+            .and().sessionManagement().sessionCreationPolicy(STATELESS)
     }
 
 }

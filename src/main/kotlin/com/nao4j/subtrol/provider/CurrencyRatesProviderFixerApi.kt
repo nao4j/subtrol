@@ -7,14 +7,14 @@ import org.springframework.web.client.RestTemplate
 
 @Repository
 class CurrencyRatesProviderFixerApi(
-        private val restTemplate: RestTemplate,
-        @Value("\${currencyRatesProvider.fixer.key}") private val accessKey: String
-): CurrencyRatesProvider {
+    private val restTemplate: RestTemplate,
+    @Value("\${currencyRatesProvider.fixer.key}") private val accessKey: String
+) : CurrencyRatesProvider {
 
     override fun latest(): CurrencyRates? = restTemplate.getForEntity<CurrencyRates>(
-            "http://data.fixer.io/currencyRatesProvider/latest?access_key={accessKey}",
-            CurrencyRates::class.java,
-            accessKey
+        "http://data.fixer.io/currencyRatesProvider/latest?access_key={accessKey}",
+        CurrencyRates::class.java,
+        accessKey
     ).body
 
 }

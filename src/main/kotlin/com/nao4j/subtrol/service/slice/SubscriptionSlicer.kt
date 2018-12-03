@@ -6,9 +6,9 @@ import com.nao4j.subtrol.model.RightOpenPeriod
 interface SubscriptionSlicer {
 
     fun slice(
-            subscriptionPeriod: RightOpenPeriod,
-            calculationPeriod: ExactPeriod,
-            stepSize: Long
+        subscriptionPeriod: RightOpenPeriod,
+        calculationPeriod: ExactPeriod,
+        stepSize: Long
     ): Collection<ExactPeriod>
 
 }

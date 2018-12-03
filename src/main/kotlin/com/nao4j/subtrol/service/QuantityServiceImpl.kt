@@ -5,7 +5,7 @@ import com.nao4j.subtrol.model.Quantity.QuantityType.MONTHS
 import org.springframework.stereotype.Service
 
 @Service
-class QuantityServiceImpl: QuantityService {
+class QuantityServiceImpl : QuantityService {
 
     override fun getAll(): Set<QuantityType> = setOf(MONTHS)
 

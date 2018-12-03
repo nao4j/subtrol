@@ -7,10 +7,10 @@ import org.springframework.data.mongodb.core.mapping.Document
 @Immutable
 @Document("users")
 data class User(
-        @Id val id: String?,
-        val email: String,
-        val password: String,
-        val roles: Set<String> = emptySet(),
-        val settings: Settings,
-        val services: Collection<Service> = emptyList()
+    @Id val id: String?,
+    val email: String,
+    val password: String,
+    val roles: Set<String> = emptySet(),
+    val settings: Settings,
+    val services: Collection<Service> = emptyList()
 )

@@ -8,10 +8,10 @@ import java.time.LocalDate
 
 @Document(collection = "currency_rates")
 data class CurrencyRates(
-        @Id val id: String? = null,
-        val base: String,
-        val date: LocalDate,
-        val timestamp: Instant,
-        val success: Boolean,
-        val rates: Map<String, BigDecimal>
+    @Id val id: String? = null,
+    val base: String,
+    val date: LocalDate,
+    val timestamp: Instant,
+    val success: Boolean,
+    val rates: Map<String, BigDecimal>
 )

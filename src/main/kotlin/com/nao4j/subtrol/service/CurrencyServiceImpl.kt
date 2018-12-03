@@ -12,9 +12,9 @@ import java.time.LocalDate
 
 @Service
 class CurrencyServiceImpl(
-        private val cacheRepository: CurrencyRatesRepository,
-        private val currencyRatesProvider: CurrencyRatesProvider
-): CurrencyService {
+    private val cacheRepository: CurrencyRatesRepository,
+    private val currencyRatesProvider: CurrencyRatesProvider
+) : CurrencyService {
 
     override fun getAll(): Set<String> {
         return currencyRatesProvider.latest()?.rates?.keys ?: emptySet()
@@ -27,9 +27,9 @@ class CurrencyServiceImpl(
                 CurrencyRate(source, target, fixerData.rates[target]!!)
             (target == fixerData.base) ->
                 CurrencyRate(
-                        source,
-                        target,
-                        ONE.divide(fixerData.rates[target]!!, 6, RoundingMode.HALF_UP)
+                    source,
+                    target,
+                    ONE.divide(fixerData.rates[target]!!, 6, RoundingMode.HALF_UP)
                 )
             else -> {
                 val sourceRate = fixerData.rates[source]!!
