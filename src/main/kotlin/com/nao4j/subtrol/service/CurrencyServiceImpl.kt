@@ -12,8 +12,8 @@ import java.time.LocalDate
 
 @Service
 class CurrencyServiceImpl(
-        val cacheRepository: CurrencyRatesRepository,
-        val currencyRatesProvider: CurrencyRatesProvider
+        private val cacheRepository: CurrencyRatesRepository,
+        private val currencyRatesProvider: CurrencyRatesProvider
 ): CurrencyService {
 
     override fun getAll(): Set<String> {

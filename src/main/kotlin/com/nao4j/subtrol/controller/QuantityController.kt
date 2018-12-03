@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/quantities")
-class QuantityController(val quantityService: QuantityService) {
+class QuantityController(private val quantityService: QuantityService) {
 
     @GetMapping
     fun getAll(): Set<QuantityType> = quantityService.getAll()

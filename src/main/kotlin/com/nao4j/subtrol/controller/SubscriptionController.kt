@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/subscriptions")
-class SubscriptionController(val subscriptionService: SubscriptionService) {
+class SubscriptionController(private val subscriptionService: SubscriptionService) {
 
     @GetMapping
     fun getAll(@RequestParam serviceName: String): List<Subscription> {

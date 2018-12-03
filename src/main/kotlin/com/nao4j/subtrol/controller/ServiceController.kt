@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/services")
-class ServiceController(val serviceService: ServiceService) {
+class ServiceController(private val serviceService: ServiceService) {
 
     @GetMapping
     fun getAll(): Set<ShortService> {

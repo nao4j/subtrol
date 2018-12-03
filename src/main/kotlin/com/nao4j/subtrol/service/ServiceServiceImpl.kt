@@ -6,7 +6,7 @@ import com.nao4j.subtrol.repository.UserRepository
 import java.time.LocalDateTime.now
 
 @org.springframework.stereotype.Service
-class ServiceServiceImpl(val userRepository: UserRepository): ServiceService {
+class ServiceServiceImpl(private val userRepository: UserRepository): ServiceService {
 
     override fun getAllForUser(userId: String): Set<ShortService> {
         val user = userRepository.findById(userId).orElseThrow { IllegalArgumentException() }

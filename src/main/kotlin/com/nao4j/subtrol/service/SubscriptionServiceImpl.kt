@@ -6,8 +6,8 @@ import com.nao4j.subtrol.repository.UserRepository
 
 @org.springframework.stereotype.Service
 class SubscriptionServiceImpl(
-        val userRepository: UserRepository,
-        val currencyService: CurrencyService
+        private val userRepository: UserRepository,
+        private val currencyService: CurrencyService
 ): SubscriptionService {
 
     override fun getAll(userId: String, serviceName: String): List<Subscription> {

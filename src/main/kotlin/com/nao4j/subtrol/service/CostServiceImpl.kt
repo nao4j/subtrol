@@ -16,9 +16,9 @@ import java.math.RoundingMode.HALF_UP
 
 @org.springframework.stereotype.Service
 class CostServiceImpl(
-        val userRepository: UserRepository,
-        val subscriptionSliceService: SubscriptionSliceService,
-        val currencyService: CurrencyService
+        private val userRepository: UserRepository,
+        private val subscriptionSliceService: SubscriptionSliceService,
+        private val currencyService: CurrencyService
 ): CostService {
 
     override fun calculateForPeriod(userId: String, period: ExactPeriod): Costs {

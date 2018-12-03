@@ -10,7 +10,7 @@ import java.time.LocalDate
 
 @RestController
 @RequestMapping("/api/currencies")
-class CurrencyController(val currencyService: CurrencyService) {
+class CurrencyController(private val currencyService: CurrencyService) {
 
     @GetMapping
     fun getAll() = currencyService.getAll()

@@ -15,7 +15,7 @@ import java.time.LocalDateTime
 
 @RestController
 @RequestMapping("/api/costs")
-class CostController(val costService: CostService) {
+class CostController(private val costService: CostService) {
 
     @GetMapping
     fun getAllInPeriod(
