@@ -1,11 +1,9 @@
-package com.nao4j.subtrol.service
+package com.nao4j.subtrol.service.slice
 
 import com.nao4j.subtrol.model.ExactPeriod
 import com.nao4j.subtrol.model.Quantity.QuantityType
 import com.nao4j.subtrol.model.Quantity.QuantityType.MONTHS
 import com.nao4j.subtrol.model.Subscription
-import com.nao4j.subtrol.service.slicer.MonthlySubscriptionSlicer
-import com.nao4j.subtrol.service.slicer.SubscriptionSlicer
 import org.springframework.stereotype.Service
 
 @Service

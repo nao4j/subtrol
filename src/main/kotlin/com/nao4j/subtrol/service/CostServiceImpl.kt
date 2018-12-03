@@ -10,6 +10,7 @@ import com.nao4j.subtrol.model.Service
 import com.nao4j.subtrol.model.Subscription
 import com.nao4j.subtrol.model.User
 import com.nao4j.subtrol.repository.UserRepository
+import com.nao4j.subtrol.service.slice.SubscriptionSliceService
 import java.math.BigDecimal.ZERO
 import java.math.RoundingMode.HALF_UP
 
