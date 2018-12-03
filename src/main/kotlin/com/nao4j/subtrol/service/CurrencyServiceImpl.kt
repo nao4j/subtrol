@@ -2,8 +2,8 @@ package com.nao4j.subtrol.service
 
 import com.nao4j.subtrol.model.CurrencyRate
 import com.nao4j.subtrol.model.CurrencyRates
-import com.nao4j.subtrol.repository.FixerApiRepository
-import com.nao4j.subtrol.repository.FixerCacheRepository
+import com.nao4j.subtrol.provider.CurrencyRatesProvider
+import com.nao4j.subtrol.repository.CurrencyRatesRepository
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import java.math.BigDecimal.ONE
@@ -12,12 +12,12 @@ import java.time.LocalDate
 
 @Service
 class CurrencyServiceImpl(
-        val cacheRepository: FixerCacheRepository,
-        val api: FixerApiRepository
+        val cacheRepository: CurrencyRatesRepository,
+        val currencyRatesProvider: CurrencyRatesProvider
 ): CurrencyService {
 
     override fun getAll(): Set<String> {
-        return api.latest()?.rates?.keys ?: emptySet()
+        return currencyRatesProvider.latest()?.rates?.keys ?: emptySet()
     }
 
     override fun getRate(source: String, target: String): CurrencyRate {
@@ -41,7 +41,7 @@ class CurrencyServiceImpl(
 
     @Scheduled(cron = "0 0 3 1/1 * ?")
     override fun loadData(): CurrencyRates? {
-        val fixerData = api.latest()
+        val fixerData = currencyRatesProvider.latest()
         if (fixerData != null) {
             return cacheRepository.save(fixerData)
         }
