@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate
 @Repository
 class CurrencyRatesProviderFixerApi(
     private val restTemplate: RestTemplate,
-    @Value("\${currencyRatesProvider.fixer.key}") private val accessKey: String
+    @Value("\${api.fixer.key}") private val accessKey: String
 ) : CurrencyRatesProvider {
 
     override fun latest(): CurrencyRates? = restTemplate.getForEntity<CurrencyRates>(
