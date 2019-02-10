@@ -5,9 +5,9 @@ version = "1.0-SNAPSHOT"
 
 plugins {
     application
-    id("org.jetbrains.kotlin.jvm").version("1.3.11")
-    id("org.jetbrains.kotlin.plugin.spring").version("1.3.11")
-    id("org.springframework.boot").version("2.1.1.RELEASE")
+    id("org.jetbrains.kotlin.jvm").version("1.3.21")
+    id("org.jetbrains.kotlin.plugin.spring").version("1.3.21")
+    id("org.springframework.boot").version("2.1.2.RELEASE")
 }
 
 repositories {
@@ -18,8 +18,8 @@ repositories {
 dependencies {
     compile(kotlin("stdlib"))
     compile(kotlin("reflect"))
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:1.3.11")
-    implementation(platform("org.springframework.boot:spring-boot-dependencies:2.1.1.RELEASE"))
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:1.3.21")
+    implementation(platform("org.springframework.boot:spring-boot-dependencies:2.1.2.RELEASE"))
     implementation("org.springframework.boot:spring-boot-configuration-processor")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
