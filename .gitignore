@@ -2,9 +2,8 @@
 *.class
 *.jar
 
-### Gradle ###
-.gradle/
-build/
+### Apache Maven ###
+target/
 
 ### JetBrains IntelliJ IDEA ###
 .idea/
