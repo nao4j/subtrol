@@ -6,27 +6,48 @@ import com.nao4j.subtrol.document.internal.Subscription;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.EnumMap;
 import java.util.Map;
+import java.util.Set;
 
-import static com.nao4j.subtrol.document.internal.Quantity.QuantityType.MONTHS;
 import static java.util.Collections.emptyList;
+import static java.util.Collections.unmodifiableMap;
+import static java.util.Objects.requireNonNull;
 
 @Service
 public class SubscriptionSliceServiceImpl implements SubscriptionSliceService {
 
-    private Map<QuantityType, SubscriptionSlicer> slicers;
+    private final Map<QuantityType, SubscriptionSlicer> slicers;
 
-    public SubscriptionSliceServiceImpl() {
-        // todo: add implementations for other types
-        this.slicers = Map.of(MONTHS, new MonthlySubscriptionSlicer());
+    public SubscriptionSliceServiceImpl(final Collection<SubscriptionSlicer> slicers) {
+        requireNonNull(slicers, "Slicers cannot be null");
+        if (slicers.isEmpty()) {
+            throw new IllegalArgumentException("Slicers cannot be empty");
+        }
+        final var slicerMap = new EnumMap<QuantityType, SubscriptionSlicer>(QuantityType.class);
+        for (final SubscriptionSlicer slicer : slicers) {
+            final QuantityType dimension = slicer.dimension();
+            if (slicerMap.put(dimension, slicer) != null) {
+                throw new IllegalArgumentException("Slicer for " + dimension + " already registered");
+            }
+        }
+        this.slicers = unmodifiableMap(slicerMap);
     }
 
     @Override
     public Collection<ExactPeriod> slice(final Subscription subscription, final ExactPeriod period) {
-        if (subscription.getQuantity().getType() == MONTHS) {
-            return slicers.get(MONTHS).slice(subscription.getPeriod(), period, subscription.getQuantity().getCount());
+        final var dimension = subscription.getQuantity().getType();
+        final var slicer = slicers.get(dimension);
+        if (slicer != null) {
+            return slicer.slice(subscription.getPeriod(), period, subscription.getQuantity().getCount());
         }
+        // todo: may be throw exception?
         return emptyList();
+    }
+
+    @Override
+    public Set<QuantityType> dimensions() {
+        return slicers.keySet();
     }
 
 }

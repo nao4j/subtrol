@@ -1,16 +1,20 @@
 package com.nao4j.subtrol.service.slice;
 
 import com.nao4j.subtrol.document.internal.ExactPeriod;
+import com.nao4j.subtrol.document.internal.Quantity.QuantityType;
 import com.nao4j.subtrol.document.internal.RightOpenPeriod;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import static com.nao4j.subtrol.document.internal.Quantity.QuantityType.MONTHS;
 import static java.time.Period.between;
 import static java.util.Collections.emptyList;
 
+@Component
 public class MonthlySubscriptionSlicer implements SubscriptionSlicer {
 
     @Override
@@ -32,6 +36,11 @@ public class MonthlySubscriptionSlicer implements SubscriptionSlicer {
             start = next;
         }
         return slices;
+    }
+
+    @Override
+    public QuantityType dimension() {
+        return MONTHS;
     }
 
     private boolean isNotIntersect(final RightOpenPeriod subscriptionPeriod, final ExactPeriod calculatePeriod) {
