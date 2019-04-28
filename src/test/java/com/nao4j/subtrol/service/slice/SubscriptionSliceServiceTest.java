@@ -85,9 +85,9 @@ class SubscriptionSliceServiceTest implements WithAssertions {
         void shouldResolveExistsSlicer(@Mock final Subscription subscription, @Mock final ExactPeriod period) {
             final long quantityCount = 1;
             final RightOpenPeriod subscriptionPeriod
-                    = new RightOpenPeriod(LocalDateTime.parse("2019-04-24 00:00"), null);
+                    = new RightOpenPeriod(LocalDateTime.parse("2019-04-24T00:00"), null);
             final Collection<ExactPeriod> result = singletonList(
-                    new ExactPeriod(LocalDateTime.parse("2019-04-24 00:00"), LocalDateTime.parse("2019-05-24 00:00"))
+                    new ExactPeriod(LocalDateTime.parse("2019-04-24T00:00"), LocalDateTime.parse("2019-05-24T00:00"))
             );
 
             final Quantity quantity = mock(Quantity.class);
