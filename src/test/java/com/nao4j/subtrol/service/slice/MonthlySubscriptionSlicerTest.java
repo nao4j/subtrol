@@ -7,6 +7,8 @@ import lombok.SneakyThrows;
 import org.assertj.core.api.WithAssertions;
 import org.json.JSONArray;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.aggregator.AggregateWith;
@@ -18,17 +20,19 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import static com.nao4j.subtrol.document.internal.Quantity.QuantityType.MONTHS;
+
 class MonthlySubscriptionSlicerTest implements WithAssertions {
 
     @Data
-    private static class TestData {
+    static class TestData {
         private final RightOpenPeriod subscriptionPeriod;
         private final Long stepSize;
         private final ExactPeriod calculatePeriod;
         private final Collection<ExactPeriod> expected;
     }
 
-    private static class TestDataAggregator implements ArgumentsAggregator {
+    static class TestDataAggregator implements ArgumentsAggregator {
 
         @Override
         @SneakyThrows
@@ -69,14 +73,29 @@ class MonthlySubscriptionSlicerTest implements WithAssertions {
         slicer = new MonthlySubscriptionSlicer();
     }
 
-    @ParameterizedTest
-    @CsvFileSource(resources = "/monthly-slicer.csv", delimiter = ';', numLinesToSkip = 1)
-    void shouldPass(@AggregateWith(TestDataAggregator.class) final TestData testData) {
-        final RightOpenPeriod subscriptionPeriod = testData.getSubscriptionPeriod();
-        final ExactPeriod calculationPeriod = testData.getCalculatePeriod();
-        final long stepSize = testData.getStepSize();
-        final Object expected = testData.getExpected();
-        assertThat(slicer.slice(subscriptionPeriod, calculationPeriod, stepSize)).isEqualTo(expected);
+    @Nested
+    class Dimension {
+
+        @Test
+        void shouldPass() {
+            assertThat(slicer.dimension()).isEqualTo(MONTHS);
+        }
+
+    }
+
+    @Nested
+    class Slice {
+
+        @ParameterizedTest
+        @CsvFileSource(resources = "/monthly-slicer.csv", delimiter = ';', numLinesToSkip = 1)
+        void shouldPass(@AggregateWith(TestDataAggregator.class) final TestData testData) {
+            final RightOpenPeriod subscriptionPeriod = testData.getSubscriptionPeriod();
+            final ExactPeriod calculationPeriod = testData.getCalculatePeriod();
+            final long stepSize = testData.getStepSize();
+            final Object expected = testData.getExpected();
+            assertThat(slicer.slice(subscriptionPeriod, calculationPeriod, stepSize)).isEqualTo(expected);
+        }
+
     }
 
 }
