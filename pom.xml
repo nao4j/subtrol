@@ -7,6 +7,13 @@
     <groupId>com.nao4j.subtrol</groupId>
     <artifactId>subtrol</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>currency-rate</module>
+        <module>core</module>
+        <module>app</module>
+    </modules>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -105,16 +112,4 @@
         </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <executable>true</executable>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-    
 </project>
