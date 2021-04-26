@@ -25,7 +25,7 @@
     <properties>
         <java.version>12</java.version>
         <jjwt.version>0.10.6</jjwt.version>
-        <commons-io.version>2.6</commons-io.version>
+        <commons-io.version>2.7</commons-io.version>
     </properties>
 
     <dependencies>
